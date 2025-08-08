@@ -7,26 +7,22 @@ const gansik = {
     isServer
       ? { data: [], message: "is server" }
       : (await fetch(`/api/gansik/sheet-names`)).json(),
-  postGansik: async (payload: PostGansikRequest): Promise<CommonResponse> =>
+  postGansik: async (payload: PostGansikRequest): Promise<Response> =>
     isServer
-      ? { data: null, message: "is server" }
-      : (
-          await fetch(`/api/gansik`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload),
-          })
-        ).json(),
-  postAddSheet: async (payload: GetGansikRequest): Promise<CommonResponse> =>
+      ? new Response()
+      : await fetch(`/api/gansik`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        }),
+  postAddSheet: async (payload: GetGansikRequest): Promise<Response> =>
     isServer
-      ? { data: null, message: "is server" }
-      : (
-          await fetch(`/api/gansik/sheet`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload),
-          })
-        ).json(),
+      ? new Response()
+      : await fetch(`/api/gansik/sheet`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        }),
 };
 
 export default gansik;

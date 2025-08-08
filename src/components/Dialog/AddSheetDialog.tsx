@@ -17,6 +17,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { toast } from "react-toastify";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import dayjs from "dayjs";
+import { CommonResponse } from "@/services/types";
 
 export function AddSheetDialog({ open, onClose }: DialogProps) {
   const { mutateAsync, isPending } = usePostAddSheet();
@@ -28,14 +29,17 @@ export function AddSheetDialog({ open, onClose }: DialogProps) {
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      await mutateAsync(values);
+      const res = await mutateAsync(values);
+      const { message } = (await res.json()) as CommonResponse;
+
+      if (!res.ok) throw new Error(message);
       await queryClient.refetchQueries({
         queryKey: GANSIK_KEYS.getGansikSheetNames(),
       });
       toast.success("시트 생성 성공");
       await onClose();
-    } catch {
-      toast.error("시트 생성 실패");
+    } catch (e) {
+      toast.error(`시트 생성 실패 : ${e instanceof Error ? e.message : e}`);
     }
   };
 
