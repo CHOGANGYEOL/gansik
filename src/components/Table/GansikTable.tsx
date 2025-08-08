@@ -3,6 +3,7 @@
 import { GetGansikResponse } from "@/services/gansik/types";
 import { setSearchParams } from "@/utils/common";
 import { formatDate } from "@/utils/format";
+import { PATTERNS } from "@/utils/rule";
 import { ContentCopy } from "@mui/icons-material";
 import {
   IconButton,
@@ -111,14 +112,11 @@ export function Content({ sheetName }: GansikTableProps) {
   );
 }
 function isISOString(val: string): val is string {
-  return (
-    typeof val === "string" &&
-    /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z$/.test(val)
-  );
+  return typeof val === "string" && PATTERNS.ISOString.test(val);
 }
 
 function isUrl(val: string): val is string {
-  return typeof val === "string" && /^https?:\/\//.test(val);
+  return typeof val === "string" && PATTERNS.URL.test(val);
 }
 
 function CopyableCell({ value }: { value: string }) {
