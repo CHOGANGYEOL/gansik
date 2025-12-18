@@ -3,7 +3,6 @@
 **Gansik Request Sheet**는 팀원들이 원할 때 간식을 요청하고,  
 그 요청 내역을 Google Sheet에 자동으로 기록하는 간단하고 직관적인 **간식 요청 시스템**입니다.
 
-🧾 **Live Demo**: [https://your-live-url.vercel.app/](https://your-live-url.vercel.app/)
 
 ---
 
